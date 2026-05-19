@@ -4,10 +4,12 @@
 [![tests](https://github.com/manjees/llm-platform-kit/actions/workflows/test.yml/badge.svg)](https://github.com/manjees/llm-platform-kit/actions/workflows/test.yml)
 [![Python](https://img.shields.io/pypi/pyversions/llm-platform-kit.svg)](https://pypi.org/project/llm-platform-kit/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Used in production](https://img.shields.io/badge/used%20in-production-success)](#production-usage)
 
-Production-ready building blocks for LLM-powered features. Extracted from a
-real production AI agent (a K-POP fandom SNS automation bot, running for 4–6
-weeks of cumulative operation) — only the domain-neutral patterns are kept here.
+Production-ready building blocks for LLM-powered features. Extracted from —
+**and used by** — a real production AI agent (a Korean K-POP fandom SNS
+automation bot, 4–6 weeks of cumulative operation) — only the domain-neutral
+patterns are kept here.
 
 > **Who is this for?** Teams shipping LLM features (chat, search, summarization,
 > recommendation, auto-reply) inside a real product.
@@ -119,15 +121,23 @@ hits = await rag.search("how do I get my money back?", top_k=3)
 # → [{"text": "Refund policy ...", "similarity": 0.82, ...}]
 ```
 
-## Real-world track record
+## Production usage
+
+This library is dogfooded: a real running AI agent (a Korean K-POP fandom SNS
+automation bot) imports it from PyPI and runs it in production. Every release
+ships only after that agent's full eval suite passes.
 
 | Metric | Value |
 |---|---|
-| Production runtime | 4–6 weeks cumulative (and counting) |
-| Daily LLM calls | ~N |
+| Production runtime | 4–6 weeks cumulative (still running) |
+| Modules in use | observability · prompts · eval · rag · guards |
+| Daily LLM calls | ~N (Langfuse-tracked) |
 | Avg cost per call | $0.00X (gpt-4o-mini) |
-| Eval composite score | 0.94 / 1.0 (13 test cases × 4 scorers) |
-| Iteration tracking | 7 rounds, 1 regression caught & rolled back |
+| Eval composite score | 0.91+ across 7 iteration rounds (13 test cases × 4 scorers) |
+| Regressions caught by eval | 1 (rolled back before merge) |
+
+If you want to plug the library into your own production stack and
+ship a similar "Used in production" credit here, open an issue or PR.
 
 ## Design principles
 
