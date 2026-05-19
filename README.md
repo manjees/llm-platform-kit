@@ -1,5 +1,10 @@
 # llm-platform-kit
 
+[![PyPI](https://img.shields.io/pypi/v/llm-platform-kit.svg)](https://pypi.org/project/llm-platform-kit/)
+[![tests](https://github.com/manjees/llm-platform-kit/actions/workflows/test.yml/badge.svg)](https://github.com/manjees/llm-platform-kit/actions/workflows/test.yml)
+[![Python](https://img.shields.io/pypi/pyversions/llm-platform-kit.svg)](https://pypi.org/project/llm-platform-kit/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 Production-ready building blocks for LLM-powered features. Extracted from a
 real production AI agent (a K-POP fandom SNS automation bot, running for 4–6
 weeks of cumulative operation) — only the domain-neutral patterns are kept here.
