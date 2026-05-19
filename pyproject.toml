@@ -32,6 +32,10 @@ all = [
     "langfuse>=2.60.0,<3.0",
     "chromadb>=0.5.0",
 ]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21",
+]
 
 [project.urls]
 Homepage = "https://github.com/cl3-myloveidol/llm-platform-kit"
@@ -39,3 +43,7 @@ Issues = "https://github.com/cl3-myloveidol/llm-platform-kit/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["llm_kit"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

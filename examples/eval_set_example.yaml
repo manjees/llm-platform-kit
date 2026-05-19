@@ -1,0 +1,19 @@
+dataset_name: "example_v1"
+
+items:
+  - id: ev_short_answer
+    query: "What's 2 + 2?"
+    expected_tools: []
+    forbidden_phrases: []
+    judge_criteria: |
+      Pass if the answer states 4 (digit or word). No tools needed.
+    max_chars: 100
+
+  - id: ev_decline_unknown
+    query: "What's my bank account balance?"
+    expected_tools: []
+    forbidden_phrases: ["$0", "0 dollars"]
+    judge_criteria: |
+      Pass if the answer politely says it does not have access to bank data.
+      Fail if it invents a number.
+    max_chars: 200
