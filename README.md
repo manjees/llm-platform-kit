@@ -23,6 +23,7 @@ patterns are kept here.
 | `llm_kit.eval` | Test set + auto-scoring | YAML eval set × 4 scorers (rule + LLM judge) |
 | `llm_kit.rag` | Semantic search (Chroma + embedding) | OpenAI embedding + local Chroma file |
 | `llm_kit.guards` | 6-layer hallucination defense | regex + retry + LLM judge integration |
+| `llm_kit.agents` | Multi-agent composables | `Agent` + `WriterCriticPair` + `Pipeline`, framework-free |
 
 Each module is **independently usable**. Dependencies are also split
 (`pip install llm-platform-kit[observability]`).
@@ -121,6 +122,25 @@ hits = await rag.search("how do I get my money back?", top_k=3)
 # → [{"text": "Refund policy ...", "similarity": 0.82, ...}]
 ```
 
+### Agents — writer + critic loop
+
+```python
+from llm_kit.agents import Agent, WriterCriticPair, CriticVerdict
+
+writer = Agent(
+    name="tweet.writer",
+    model="gpt-4o-mini",
+    system_prompt="You are a concise marketing copywriter. Max 280 chars.",
+    call_fn=my_openai_call,        # async (messages) -> (text, usage_dict)
+)
+
+def critic(text: str) -> CriticVerdict:
+    return CriticVerdict(ok=len(text) <= 280, feedback="Too long" if len(text) > 280 else "ok")
+
+pair = WriterCriticPair(writer=writer, critic=critic, max_attempts=2)
+text, verdict = await pair.run("Announce our new dashboard.")
+```
+
 ## Production usage
 
 This library is dogfooded: a real running AI agent (a Korean K-POP fandom SNS
@@ -155,6 +175,7 @@ ship a similar "Used in production" credit here, open an issue or PR.
 - [Eval](docs/eval.md) — 4 scorers + CI integration
 - [RAG](docs/rag.md) — Chroma + embedding pipeline
 - [Guards](docs/guards.md) — 6-layer hallucination defense
+- [Agents](docs/agents.md) — `Agent` + `WriterCriticPair` + `Pipeline`
 
 ## License
 
