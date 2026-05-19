@@ -1,0 +1,35 @@
+name: publish
+
+# Triggers when a GitHub Release is published with a version tag (e.g. v0.2.0).
+# Uses PyPI's Trusted Publisher (OIDC) — no API token in secrets.
+# Setup once: https://pypi.org/manage/project/llm-platform-kit/settings/publishing/
+#   - Owner: <github-username>
+#   - Repo: llm-platform-kit
+#   - Workflow: publish.yml
+#   - Environment: pypi
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write   # required for Trusted Publishing
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
